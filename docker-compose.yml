@@ -2,17 +2,17 @@ version: '3.2'
 
 services:
   janus:
+    build:
+      context: ./docker-conf/
     image: ${IMAGE_NS:-internal}/${IMAGE_PROJ:-default}/janus:0.1.0
     container_name: ${CONTAINER_NS:-internal}-${CONTAINER_PROJ:-default}-janus
-    build:
-      context: ./
     ports:
-      - "80:80"
-      - "7088:7088"
-      - "8088:8088"
-      - "8188:8188"
-      - "8089:8089"
-      - "8989:8989"
-      - "10000-10200:10000-10200/udp"
-    environment:
-      - DOCKER_IP=${DOCKER_IP:-127.0.0.1}
+      - 18080:80
+      - 18443:443
+      - 8088:8088
+      - 8089:8089
+      - 8188:8188
+      - 8989:8989
+    volumes:
+      - ./recordings-folder/:/path/to/recordings-folder/
+    command: bash startup.sh #tail -f /dev/null #bash startup.sh
