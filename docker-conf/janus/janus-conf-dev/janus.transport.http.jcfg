@@ -40,12 +40,12 @@ general: {
 admin: {
 	admin_base_path = "/admin"			# Base path to bind to in the admin/monitor web server (plain HTTP only)
 	admin_threads = "unlimited"			# unlimited=thread per connection, number=thread pool
-	admin_http = false					# Whether to enable the plain HTTP interface
+	admin_http = true					# Whether to enable the plain HTTP interface
 	admin_port = 7088					# Admin/monitor web server HTTP port
 	#admin_interface = "eth0"			# Whether we should bind this server to a specific interface only
 	#admin_ip = "192.168.0.1"			# Whether we should bind this server to a specific IP address (v4 or v6) only
-	admin_https = false					# Whether to enable HTTPS (default=no)
-	#admin_secure_port = 7889			# Admin/monitor web server HTTPS port, if enabled
+	admin_https = true					# Whether to enable HTTPS (default=no)
+	admin_secure_port = 7889			# Admin/monitor web server HTTPS port, if enabled
 	#admin_secure_interface = "eth0"	# Whether we should bind this server to a specific interface only
 	#admin_secure_ip = "192.168.0.1		# Whether we should bind this server to a specific IP address (v4 or v6) only
 	#admin_acl = "127.,192.168.0."		# Only allow requests coming from this comma separated list of addresses
@@ -66,8 +66,10 @@ cors: {
 # You can also disable insecure protocols and ciphers by configuring the
 # 'ciphers' property accordingly (no limitation by default).
 certificates: {
-	cert_pem = "/opt/janus/share/janus/certs/mycert.pem"
-	cert_key = "/opt/janus/share/janus/certs/mycert.key"
+	cert_pem = "/opt/janus/share/janus/certs/certificate.crt"
+	cert_key = "/opt/janus/share/janus/certs/privateKey.key"
+	#cert_pem = "/path/to/cert.pem"
+	#cert_key = "/path/to/key.pem"
 	#cert_pwd = "secretpassphrase"
 	#ciphers = "PFS:-VERS-TLS1.0:-VERS-TLS1.1:-3DES-CBC:-ARCFOUR-128"
 }

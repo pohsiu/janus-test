@@ -3,16 +3,44 @@ version: '3.2'
 services:
   janus:
     build:
-      context: ./docker-conf/
-    image: ${IMAGE_NS:-internal}/${IMAGE_PROJ:-default}/janus:0.1.0
-    container_name: ${CONTAINER_NS:-internal}-${CONTAINER_PROJ:-default}-janus
+      context: ./docker-conf/janus/
+    image: janus:0.1.0
+    container_name: my-janus
     ports:
-      - 18080:80
-      - 18443:443
-      - 8088:8088
-      - 8089:8089
-      - 8188:8188
-      - 8989:8989
+      - 27081:8080 # for http python api
+      - 27080:80 # for HTML-Examples(http)
+      - 27443:443 # for HTML-Examples(https)
+      - 28088:8088 # for RESTful http  API
+      - 28089:8089 # for RESTful https API
+      - 28188:8188 # for WebSocket  WS  API
+      - 28989:8989 # for WebSocket  WSS API
+      - 27088:7088 # for http admin API
+      - 27889:7889 # for https admin API
     volumes:
       - ./recordings-folder/:/path/to/recordings-folder/
     command: bash startup.sh #tail -f /dev/null #bash startup.sh
+  coturn:
+    build:
+      context: ./docker-conf/coturn/
+    container_name: my-coturn
+    restart: always
+    # volumes:
+    #   - ${PWD}/docker-conf/coturn/turnserver.conf:/etc/turnserver.conf
+    ports:
+## STUN/TURN
+      - "10102:3478"
+      - "10102:3478/udp"      
+#       - "23479:3479"
+#       - "23479:3479/udp"
+#       - "26080:80"
+#       - "26080:80/udp"
+# ## STUN/TURN SSL
+#       - "25349:5349"
+#       - "25349:5349/udp"
+#       - "25350:5350"
+#       - "25350:5350/udp"
+#       - "26443:443"
+#       - "26443:443/udp"
+# Relay Ports
+#      - "49152-65535:49152-65535"
+#      - "49152-65535:49152-65535/udp"
